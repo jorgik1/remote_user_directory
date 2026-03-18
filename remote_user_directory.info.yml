@@ -1,0 +1,6 @@
+name: Remote User Directory
+type: module
+description: 'Provides a block that lists users from the ReqRes API.'
+package: Custom
+core_version_requirement: ^11.3
+configure: remote_user_directory.settings

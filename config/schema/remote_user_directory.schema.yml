@@ -1,0 +1,39 @@
+remote_user_directory.settings:
+  type: config_object
+  label: 'Remote user directory settings'
+  mapping:
+    api_key:
+      type: string
+      label: 'ReqRes API key'
+    base_uri:
+      type: string
+      label: 'Base API URI'
+    timeout:
+      type: integer
+      label: 'Request timeout'
+    cache_ttl:
+      type: integer
+      label: 'Cache TTL'
+    excluded_emails:
+      type: sequence
+      label: 'Excluded email addresses'
+      sequence:
+        type: email
+        label: 'Excluded email address'
+
+block.settings.remote_user_directory_user_list:
+  type: block_settings
+  label: 'Remote user directory block settings'
+  mapping:
+    items_per_page:
+      type: integer
+      label: 'Items per page'
+    email_label:
+      type: label
+      label: 'Email label'
+    forename_label:
+      type: label
+      label: 'Forename label'
+    surname_label:
+      type: label
+      label: 'Surname label'

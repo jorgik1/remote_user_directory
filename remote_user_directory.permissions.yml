@@ -1,0 +1,3 @@
+administer remote user directory:
+  title: 'Administer remote user directory settings'
+  description: 'Manage API settings for the remote user directory module.'

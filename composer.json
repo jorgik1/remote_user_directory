@@ -1,0 +1,77 @@
+{
+  "name": "drupal/remote_user_directory",
+  "version": "0.0.1",
+  "description": "Drupal 11 block module that lists remote users from the ReqRes API.",
+  "type": "drupal-module",
+  "license": "GPL-2.0-or-later",
+  "require": {
+    "php": "^8.3",
+    "composer/installers": "^2.3",
+    "drupal/core": "^11.3"
+  },
+  "require-dev": {
+    "drupal/core-dev": "^11.3"
+  },
+  "autoload": {
+    "psr-4": {
+      "Drupal\\remote_user_directory\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Drupal\\Tests\\remote_user_directory\\": "tests/src/"
+    }
+  },
+  "scripts": {
+    "test": "phpunit -c phpunit.xml.dist",
+    "phpstan": "phpstan analyse -c phpstan.neon.dist --memory-limit=1G",
+    "phpcs": "phpcs --standard=phpcs.xml.dist",
+    "ci": [
+      "@test",
+      "@phpstan",
+      "@phpcs"
+    ]
+  },
+  "config": {
+    "sort-packages": true,
+    "allow-plugins": {
+      "composer/installers": true,
+      "dealerdirect/phpcodesniffer-composer-installer": true,
+      "drupal/core-composer-scaffold": true,
+      "php-http/discovery": true,
+      "phpstan/extension-installer": true,
+      "tbachert/spi": true
+    }
+  },
+  "extra": {
+    "drupal-scaffold": {
+      "file-mapping": {
+        "[project-root]/.editorconfig": false,
+        "[project-root]/.gitattributes": false,
+        "[project-root]/recipes/README.txt": false,
+        "[web-root]/.csslintrc": false,
+        "[web-root]/.eslintignore": false,
+        "[web-root]/.eslintrc.json": false,
+        "[web-root]/.ht.router.php": false,
+        "[web-root]/.htaccess": false,
+        "[web-root]/example.gitignore": false,
+        "[web-root]/index.php": false,
+        "[web-root]/INSTALL.txt": false,
+        "[web-root]/README.md": false,
+        "[web-root]/robots.txt": false,
+        "[web-root]/update.php": false,
+        "[web-root]/modules/README.txt": false,
+        "[web-root]/profiles/README.txt": false,
+        "[web-root]/themes/README.txt": false,
+        "[web-root]/sites/README.txt": false,
+        "[web-root]/sites/development.services.yml": false,
+        "[web-root]/sites/example.settings.local.php": false,
+        "[web-root]/sites/example.sites.php": false,
+        "[web-root]/sites/default/default.services.yml": false,
+        "[web-root]/sites/default/default.settings.php": false
+      }
+    }
+  },
+  "minimum-stability": "stable",
+  "prefer-stable": true
+}

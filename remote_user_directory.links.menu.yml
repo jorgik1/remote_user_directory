@@ -1,0 +1,5 @@
+remote_user_directory.settings:
+  title: 'Remote user directory'
+  description: 'Configure remote API access for the user directory block.'
+  parent: system.admin_config_services
+  route_name: remote_user_directory.settings

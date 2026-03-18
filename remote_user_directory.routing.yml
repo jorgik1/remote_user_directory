@@ -1,0 +1,7 @@
+remote_user_directory.settings:
+  path: '/admin/config/services/remote-user-directory'
+  defaults:
+    _form: '\Drupal\remote_user_directory\Form\SettingsForm'
+    _title: 'Remote user directory'
+  requirements:
+    _permission: 'administer remote user directory'

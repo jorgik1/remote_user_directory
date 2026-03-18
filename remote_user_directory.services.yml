@@ -1,0 +1,38 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: false
+    public: false
+
+  logger.channel.remote_user_directory:
+    parent: logger.channel_base
+    arguments: ['remote_user_directory']
+
+  Drupal\remote_user_directory\Normalizer\ReqresUserPageNormalizer: ~
+
+  Drupal\remote_user_directory\Client\ReqresUserApiClient:
+    arguments:
+      $httpClient: '@http_client'
+      $configFactory: '@config.factory'
+
+  Drupal\remote_user_directory\Service\ExcludedEmailListParser:
+    public: true
+
+  Drupal\remote_user_directory\Filter\ConfiguredEmailExclusionFilter:
+    arguments:
+      $configFactory: '@config.factory'
+    tags:
+      - { name: remote_user_directory.user_filter, priority: 0 }
+
+  Drupal\remote_user_directory\Filter\UserFilterPipeline:
+    arguments:
+      $filters: !tagged_iterator remote_user_directory.user_filter
+
+  Drupal\remote_user_directory\Service\UserListingService:
+    arguments:
+      $cacheDefault: '@cache.default'
+      $time: '@datetime.time'
+      $logger: '@logger.channel.remote_user_directory'
+
+  Drupal\remote_user_directory\Service\RemoteUserProviderInterface:
+    alias: Drupal\remote_user_directory\Service\UserListingService

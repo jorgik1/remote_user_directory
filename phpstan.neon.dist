@@ -1,0 +1,10 @@
+includes:
+  - vendor/phpstan/phpstan-phpunit/extension.neon
+  - vendor/mglaman/phpstan-drupal/extension.neon
+
+parameters:
+  level: 8
+  paths:
+    - src
+    - tests/src
+  tmpDir: .phpstan
