@@ -28,10 +28,17 @@ final class SettingsForm extends ConfigFormBase {
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container): self {
+    /** @var \Drupal\Core\Config\ConfigFactoryInterface $configFactory */
+    $configFactory = $container->get('config.factory');
+    /** @var \Drupal\Core\Config\TypedConfigManagerInterface $typedConfigManager */
+    $typedConfigManager = $container->get('config.typed');
+    /** @var \Drupal\remote_user_directory\Service\ExcludedEmailListParser $excludedEmailListParser */
+    $excludedEmailListParser = $container->get(ExcludedEmailListParser::class);
+
     return new self(
-      $container->get('config.factory'),
-      $container->get('config.typed'),
-      $container->get(ExcludedEmailListParser::class),
+      $configFactory,
+      $typedConfigManager,
+      $excludedEmailListParser,
     );
   }
 

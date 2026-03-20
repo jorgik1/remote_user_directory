@@ -71,13 +71,20 @@ final class RemoteUserDirectoryBlock extends BlockBase implements ContainerFacto
     $plugin_id,
     $plugin_definition,
   ): self {
+    /** @var \Drupal\remote_user_directory\Service\RemoteUserProviderInterface $remoteUserProvider */
+    $remoteUserProvider = $container->get(RemoteUserProviderInterface::class);
+    /** @var \Drupal\Core\Pager\PagerManagerInterface $pagerManager */
+    $pagerManager = $container->get('pager.manager');
+    /** @var \Drupal\Core\Config\ConfigFactoryInterface $configFactory */
+    $configFactory = $container->get('config.factory');
+
     return new self(
       $configuration,
       $plugin_id,
       $plugin_definition,
-      $container->get(RemoteUserProviderInterface::class),
-      $container->get('pager.manager'),
-      $container->get('config.factory'),
+      $remoteUserProvider,
+      $pagerManager,
+      $configFactory,
     );
   }
 

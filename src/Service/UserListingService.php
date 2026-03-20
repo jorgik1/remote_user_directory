@@ -80,6 +80,7 @@ final class UserListingService implements RemoteUserProviderInterface {
    *   TRUE when the cached record is still fresh.
    */
   private function isFresh(string $cacheId): bool {
+    /** @var object{data:mixed}|false $cacheItem */
     $cacheItem = $this->cacheDefault->get($cacheId);
     if ($cacheItem === FALSE || !is_array($cacheItem->data)) {
       return FALSE;
@@ -104,6 +105,7 @@ final class UserListingService implements RemoteUserProviderInterface {
    *   The cached page, or NULL when none exists.
    */
   private function getCachedPage(string $cacheId): ?RemoteUserPage {
+    /** @var object{data:mixed}|false $cacheItem */
     $cacheItem = $this->cacheDefault->get($cacheId);
     if ($cacheItem === FALSE || !is_array($cacheItem->data)) {
       return NULL;
