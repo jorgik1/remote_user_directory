@@ -6,6 +6,7 @@ namespace Drupal\remote_user_directory\Plugin\Block;
 
 use Drupal\Core\Block\Attribute\Block;
 use Drupal\Core\Block\BlockBase;
+use Drupal\Core\Cache\Cache;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Form\FormStateInterface;
@@ -233,20 +234,20 @@ final class RemoteUserDirectoryBlock extends BlockBase implements ContainerFacto
    * {@inheritdoc}
    */
   public function getCacheContexts(): array {
-    return array_values(array_unique(array_merge(
+    return Cache::mergeContexts(
       parent::getCacheContexts(),
       ['url.query_args:page'],
-    )));
+    );
   }
 
   /**
    * {@inheritdoc}
    */
   public function getCacheTags(): array {
-    return array_values(array_unique(array_merge(
+    return Cache::mergeTags(
       parent::getCacheTags(),
       ['config:remote_user_directory.settings'],
-    )));
+    );
   }
 
 }

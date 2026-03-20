@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\remote_user_directory\Unit\Plugin\Block;
 
+use Drupal\Core\Cache\Context\CacheContextsManager;
 use Drupal\Core\Form\FormState;
 use Drupal\Core\Pager\Pager;
 use Drupal\Core\Pager\PagerManagerInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\Core\DependencyInjection\ContainerBuilder;
 use Drupal\remote_user_directory\Exception\RemoteUserDirectoryException;
 use Drupal\remote_user_directory\Plugin\Block\RemoteUserDirectoryBlock;
 use Drupal\remote_user_directory\Service\RemoteUserProviderInterface;
@@ -16,10 +18,19 @@ use Drupal\remote_user_directory\ValueObject\RemoteUserPage;
 use Drupal\Tests\remote_user_directory\Unit\TestDouble\CreatesConfigFactoryTrait;
 use Drupal\Tests\remote_user_directory\Unit\TestDouble\IdentityTranslation;
 use PHPUnit\Framework\TestCase;
+use Drupal;
 
 final class RemoteUserDirectoryBlockTest extends TestCase {
 
   use CreatesConfigFactoryTrait;
+
+  protected function tearDown(): void {
+    if (Drupal::hasContainer()) {
+      Drupal::unsetContainer();
+    }
+
+    parent::tearDown();
+  }
 
   public function testDefaultConfigurationProvidesExpectedValues(): void {
     $block = $this->createBlock();
@@ -102,6 +113,7 @@ final class RemoteUserDirectoryBlockTest extends TestCase {
   }
 
   public function testGetCacheContextsVariesByPagerQueryArgument(): void {
+    $this->setDrupalContainer();
     $block = $this->createBlock();
 
     self::assertContains('url.query_args:page', $block->getCacheContexts());
@@ -139,5 +151,15 @@ final class RemoteUserDirectoryBlockTest extends TestCase {
 
     $block->setStringTranslation(new IdentityTranslation());
     return $block;
+  }
+
+  private function setDrupalContainer(): void {
+    $cacheContextsManager = $this->createMock(CacheContextsManager::class);
+    $cacheContextsManager->method('assertValidTokens')
+      ->willReturn(TRUE);
+
+    $container = new ContainerBuilder();
+    $container->set('cache_contexts_manager', $cacheContextsManager);
+    Drupal::setContainer($container);
   }
 }
